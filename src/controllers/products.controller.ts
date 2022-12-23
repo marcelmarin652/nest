@@ -1,4 +1,4 @@
-import { Controller, Get, Query, Param } from '@nestjs/common';
+import { Controller, Get, Query, Param, Post, Body } from '@nestjs/common';
 
 @Controller('products')
 export class ProductsController {
@@ -9,7 +9,9 @@ export class ProductsController {
     @Query('brand') brand: string,
   ) {
     // puedo enviar algo asi http://localhost:3000/products?limit=100&offset=50
-    return `Product: limit=>${limit} offset=> ${offset} brand=> ${brand}`;
+    return {
+      message: `limit: ${limit} offset: ${offset} brand: ${brand}`,
+    };
   }
 
   // aqui colocamos filter arriba para que no se confunda con el de abajo ya que puede pensar que "filter" es un id
@@ -23,5 +25,13 @@ export class ProductsController {
   getProducts(@Param('productId') productId: string) {
     // tiene que ser params.id porque tiene que ser el mismo nombre que el parametro como lo pongamos
     return `Product ${productId}`;
+  }
+
+  @Post()
+  create(@Body() payload: any){
+    return {
+      message: 'action create',
+      payload,
+    };
   }
 }
