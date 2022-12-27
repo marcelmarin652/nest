@@ -6,6 +6,8 @@ import {
   IsPositive,
 } from 'class-validator';
 
+import { PartialType } from '@nestjs/mapped-types'
+
 export class CreateProductDto {
   // readonly es que no quiero que se manipule solo que sea de tipo lectura, es decir el atributo no puede ser modificado
   @IsString()
@@ -31,11 +33,7 @@ export class CreateProductDto {
   readonly image: string;
 }
 
-export class UpdateProductDto {
-  // readonly es que no quiero que se manipule solo que sea de tipo lectura, es decir el atributo no puede ser modificado
-  readonly name?: string;
-  readonly description?: string;
-  readonly price?: number;
-  readonly stock?: number;
-  readonly image?: string;
+// aqui hace las mismas validaciones del padre pero cada una de ellas va a ser opcional
+export class UpdateProductDto extends PartialType(CreateProductDto) {
+
 }
