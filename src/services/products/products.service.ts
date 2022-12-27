@@ -33,4 +33,18 @@ export class ProductsService {
     this.products.push(newProduct);
     return newProduct;
   }
+
+  update(id: number, payload: any) {
+    const product = this.findOne(id);
+    if (product) {
+      const index = this.products.findIndex((item) => item.id === id);
+      // aqui estamos haciendo un merge de los objetos para que no se pierdan los datos que no se estan enviando en el payload y solo se actualicen los que si se estan enviando en el payload
+      this.products[index] = {
+        ...product,
+        ...payload,
+      };
+      return this.products[index];
+    }
+    return null;
+  }
 }
