@@ -70,8 +70,6 @@ export class ProductsController {
   //delete
   @Delete(':id')
   delete(@Param('id') id: string) {
-    return {
-      id,
-    };
+    return this.productsService.remove(+id);
   }
 }
