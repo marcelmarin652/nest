@@ -9,9 +9,11 @@ import {
   Delete,
   HttpStatus,
   HttpCode,
+  ParseIntPipe,
 } from '@nestjs/common';
 
 import { ProductsService } from '../services/products/products.service';
+import { CreateProductDto, UpdateProductDto } from '../../src/dtos/products.dtos'
 
 @Controller('products')
 export class ProductsController {
@@ -38,18 +40,18 @@ export class ProductsController {
 
   @Get(':productId')
   @HttpCode(HttpStatus.ACCEPTED)
-  getProduct(@Param('productId') productId: string) {
+  getProduct(@Param('productId', ParseIntPipe) productId: number) {
     // tiene que ser params.id porque tiene que ser el mismo nombre que el parametro como lo pongamos
     // return {
     //   message: `productId: ${productId}`,
 
     // };
     // Al agregarle el + adelante de productId, lo convierte a number
-    return this.productsService.findOne(+productId);
+    return this.productsService.findOne(productId);
   }
 
   @Post()
-  create(@Body() payload: any) {
+  create(@Body() payload: CreateProductDto) {
     // return {
     //   message: 'action create',
     //   payload,
@@ -59,7 +61,7 @@ export class ProductsController {
 
   //update
   @Put(':id')
-  update(@Param('id') id: string, @Body() payload: any) {
+  update(@Param('id') id: string, @Body() payload: UpdateProductDto) {
     // return {
     //   id,
     //   payload,
