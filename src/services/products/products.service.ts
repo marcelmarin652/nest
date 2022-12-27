@@ -32,6 +32,8 @@ export class ProductsService {
   }
 
   create(payload: CreateProductDto) {
+    console.log(payload);
+
     const newProduct = {
       id: this.products.length + 1,
       ...payload,
