@@ -6,7 +6,7 @@ import {
   IsPositive,
 } from 'class-validator';
 
-import { PartialType } from '@nestjs/mapped-types'
+import { PartialType } from '@nestjs/swagger'
 
 export class CreateProductDto {
   // readonly es que no quiero que se manipule solo que sea de tipo lectura, es decir el atributo no puede ser modificado
