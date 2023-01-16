@@ -19,7 +19,6 @@ async function bootstrap() {
     .setTitle('API')
     .setDescription('The STORE API description')
     .setVersion('1.0')
-    .addTag('cats')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
