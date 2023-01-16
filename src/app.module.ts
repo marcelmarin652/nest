@@ -1,19 +1,23 @@
 import { Module } from '@nestjs/common';
 //para la configuracion de variables de entorno
 import { ConfigModule } from '@nestjs/config';
+import * as Joi from 'joi';
+import { HttpModule, HttpService } from '@nestjs/axios';
+import { firstValueFrom } from 'rxjs';
+
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CostumersController } from './controllers/costumers.controller';
 import { OrdersController } from './controllers/orders.controller';
 import { UsersModule } from './users/users.module';
-import { ProductsModule } from './products/products.module';
 
-import { HttpModule, HttpService } from '@nestjs/axios';
-import { firstValueFrom } from 'rxjs';
+import { ProductsModule } from './products/products.module';
 import { DatabaseModule } from './database/database.module';
 
 import { enviroments} from '../enviroments';
 import config  from './config';
+
+
 
 // const API_KEY2 = '123456';
 // const API_KEY = 'prod123142124';
@@ -32,6 +36,16 @@ import config  from './config';
       envFilePath: enviroments[process.env.NODE_ENV] || '.env',
       load: [config],
       isGlobal: true,
+      // joi lo que hace es validar las variables de entorno que se coloquen en el servidor estean correctas
+      validationSchema: Joi.object({
+        //aqui le decimos que variables de entorno son obligatorias
+        DATABASE_NAME: Joi.string().required(),
+        DATABASE_PORT: Joi.number().required(),
+        API_KEY: Joi.string().required(),
+        // aqui le decimos que variables de entorno son opcionales
+        DATABASE_USER: Joi.string(),
+        DATABASE_PASSWORD: Joi.string(),
+      })
     }),
   ],
   controllers: [AppController, CostumersController, OrdersController],
