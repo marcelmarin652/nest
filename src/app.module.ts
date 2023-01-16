@@ -13,6 +13,7 @@ import { firstValueFrom } from 'rxjs';
 import { DatabaseModule } from './database/database.module';
 
 import { enviroments} from '../enviroments';
+import config  from './config';
 
 // const API_KEY2 = '123456';
 // const API_KEY = 'prod123142124';
@@ -29,6 +30,7 @@ import { enviroments} from '../enviroments';
     ConfigModule.forRoot({
       // aqui le decimos que archivo de configuracion va a leer segun el modo en que se este ejecutando la app (dev o prod) y si no encuentra ninguno leera el .env
       envFilePath: enviroments[process.env.NODE_ENV] || '.env',
+      load: [config],
       isGlobal: true,
     }),
   ],
